@@ -1,0 +1,761 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&display=swap');
+
+:root {
+  --light-pink-accent: #ff7ab4;
+  --pink-accent: #e80065;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+* a {
+  color: inherit;
+  text-decoration-color: var(--light-pink-accent);
+  text-transform: lowercase;
+  transition: filter 0.3s;
+}
+
+* a:hover,
+* a:focus {
+  filter: brightness(75%);
+}
+
+* a.disabled {
+  color: #9f9f9f;
+  text-decoration: underline;
+  user-select: none;
+  cursor: not-allowed;
+}
+
+* a.disabled:hover {
+  filter: none;
+}
+
+body {
+  margin: 0;
+  font-family: Montserrat, Arial, sans-serif;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+body.dark-mode a {
+  color: #efc5ed; /* Light pink links */
+}
+
+body.dark-mode .theme-toggle {
+  background-color: #333; /* Dark gray for the button */
+  color: #f29fc3; /* Light pink text for the button */
+}
+
+body.dark-mode .landing-page {
+  background: #1e1e1e; /* Dark background */
+  background-image: radial-gradient(#333 15%, transparent 0),
+    radial-gradient(#333 15%, transparent 0); /* Subtle dark pattern */
+  background-size: 10px 10px;
+  background-position: 0 0, 15px 15px;
+  color: #ffffff; /* Light text for dark mode */
+}
+
+body.dark-mode .landing-page.work {
+  background-image: radial-gradient(#444 10%, transparent 0),
+    radial-gradient(#444 10%, transparent 0); /* Adjusted for work section */
+}
+
+body.dark-mode nav {
+  background-color: #1e1e1e; /* Dark background for the nav bar */
+  color: #ffffff; /* Light text for the nav bar */
+  border-bottom: 1px solid #333; /* Optional: Add a subtle border */
+}
+
+body.dark-mode nav a {
+  color: #efc5ed; /* Light pink links for dark mode */
+}
+
+body.dark-mode nav a:hover {
+  color: #f29fc3; /* Brighter pink on hover */
+}
+
+.landing-page {
+  min-height: 90vh;
+  background: #fff;
+  background-image: radial-gradient(#eee 15%, transparent 0),
+    radial-gradient(#eee 15%, transparent 0);
+  background-size: 10px 10px;
+  background-position: 0 0, 15px 15px;
+  padding: 2em 7.5em;
+}
+
+.landing-page.work {
+  background-image: radial-gradient(#eee 10%, transparent 0),
+    radial-gradient(#eee 10%, transparent 0);
+}
+
+.landing-page.slides a {
+  font-size: 1rem;
+}
+
+.landing-page .intro-title {
+  font-family: Lobster, "Courier New", Courier, sans-serif;
+  font-size: 3.5rem;
+  margin: 1rem 0;
+}
+
+.landing-page .intro-container {
+  border: 5px solid var(--light-pink-accent);
+  border-radius: 1em;
+  padding: 1em;
+  min-height: calc(90vh - 4em);
+  display: flex;
+  align-items: center;
+}
+
+.landing-page .intro-container #intro-loader {
+  color: var(--pink-accent);
+  transition: opacity 1s;
+  opacity: 1;
+  text-transform: capitalize;
+}
+
+.landing-page .intro-container #intro-loader.fade {
+  animation: blink 2s infinite forwards;
+}
+
+.landing-page .intro-container .intro-text {
+  width: 75%;
+  margin-left: 6.5em;
+}
+
+.landing-page .intro-container .intro-image {
+  width: 50%;
+  padding: 1em;
+  text-align: center;
+}
+
+.landing-page .intro-container .intro-image img {
+  width: 50%;
+  border-radius: 50%;
+  min-width: 150px;
+}
+.intro-greeting {
+  font-family: 'Montserrat', sans-serif; /* Match the rest of the design */
+  font-size: 1.2rem; /* Slightly smaller than the title */
+  color: #555; /* Subtle gray color */
+  margin-bottom: 0.5em; /* Add spacing below */
+  text-align: left; /* Center-align the text */
+  margin-left: 0;
+}
+.image-container {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 620px; /* Adjust size as needed */
+  height: auto;
+  transform: translate(-10%, -10%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+.tap-wrapper {
+  position: relative; /* Position relative to the wrapper */
+}
+
+/* "Tap!" sign styles */
+.tap-sign {
+  position: absolute;
+  top: -500px;  /* Slightly above the image */
+  right: -120px; /* Adjusted for better placement */
+  z-index: 10;
+  background-color: #ff4081; /* Cute pink */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transform: rotate(25deg); /* Slightly diagonal */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  animation: bounce 1.5s infinite;
+}
+
+.drag-label {
+  position: absolute;
+  top: 20px;  /* Slightly above the image */
+  left: 10px; /* Adjusted for better placement */
+  z-index: 10;
+  background-color: #ff4081; /* Cute pink */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transform: rotate(25deg); /* Slightly diagonal */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  animation: bounce 1.5s infinite;
+}
+
+/* Cute bounce animation */
+@keyframes bounce {
+  0%, 100% {
+      transform: rotate(-15deg) translateY(0);
+  }
+  50% {
+      transform: rotate(-15deg) translateY(-5px);
+  }
+}
+/* Hide the default cursor */
+body {
+  cursor: none;
+}
+
+/* Main Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 64, 129, 0.9); /* Vibrant pink */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out;
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.6); /* Soft glow */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+/* Cursor Trail */
+.trail {
+  position: fixed;
+  width: 6px; /* Slightly larger for a blending effect */
+  height: 6px;
+  background-color: rgba(255, 64, 129, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  filter: blur(8px); /* Smooth blending */
+  animation: fadeTrail 0.4s ease-out forwards;
+}
+
+/* Smooth Trail Fade */
+@keyframes fadeTrail {
+  0% {
+      opacity: 1;
+      transform: scale(1);
+  }
+  100% {
+      opacity: 0;
+      transform: scale(1.5);
+  }
+}
+
+
+/* Dragging Effect */
+.dragging {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 204, 0, 0.8); /* Yellow glow */
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+
+
+#toggle-sound {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background: #f29fc3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#toggle-sound:hover {
+  background: #d278a3;
+}
+
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #f29fc3; /* Light pink for light mode */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle.dark {
+  background-color: #333; /* Dark gray for dark mode */
+  color: #f29fc3; /* Light pink text for dark mode */
+}
+
+nav {
+  height: 10vh;
+  padding: 1em 7.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 99;
+}
+
+nav a {
+  text-transform: lowercase;
+  margin: 0 1em;
+}
+
+main section {
+  margin: 0em 7.5em;
+  padding: 2em 0;
+}
+
+.section-break {
+  height: 45vh;
+  background-color: #eee;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.section-break.work {
+  background-image: url("../images/typing.jpg");
+  background-position: center;
+}
+
+.section-break.speaking {
+  background-image: url("../images/speaking.png"); /* Updated to use speaking.png */
+  background-position: top;
+  background-size: cover; /* Ensures the image covers the section */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.section-break.contact {
+  background-color: #fff;
+  background-image: radial-gradient(var(--light-pink-accent) 10%, transparent 0),
+    radial-gradient(var(--light-pink-accent) 10%, transparent 0);
+  background-size: 15px 15px;
+  background-position: 0 0, 22.5px 22.5px;
+}
+
+.section-link {
+  padding: 1em;
+  text-align: center;
+}
+
+.section-title {
+  margin: 1em 0;
+}
+
+.section-container {
+  padding: 0 7.5em;
+}
+
+.site {
+  display: flex;
+  padding: 2em 0;
+}
+
+.site + .site {
+  border-top: 5px solid var(--light-pink-accent);
+}
+
+.site .site-image {
+  margin-right: 1em;
+}
+
+.site-image img {
+  width: 100%;
+  filter: grayscale(1);
+  transition: filter 0.3s;
+}
+
+.site-image img:hover {
+  filter: grayscale(0);
+}
+
+.site .site-text {
+  padding: 0em 1em;
+  width: 65%;
+}
+
+.site-text h3 {
+  text-transform: uppercase;
+  color: var(--pink-accent);
+  margin-top: 0;
+}
+
+.site-stack {
+  padding: 0;
+  margin: 0;
+}
+
+.site-stack li {
+  list-style: none;
+  padding: 0.5em;
+  border: 1px solid grey;
+  display: inline-block;
+  margin: 0 0.5em 1em 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.site-stack li:hover {
+  background-color: var(--pink-accent); /* Or just use a hex like #ff69b4 */
+  color: white;
+  border-color: var(--pink-accent);
+}
+
+.section-text {
+  margin: 1em 7.5em;
+}
+
+.styled-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding: 0;
+  margin: 0;
+}
+
+.styled-list li {
+  margin: 1em 2em;
+}
+
+#speaking .styled-list li {
+  margin-top: 0;
+}
+
+.styled-list h4 {
+  text-transform: uppercase;
+  color: var(--pink-accent);
+  margin: 0;
+}
+
+.styled-list .list-subtitle {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0.15rem 0;
+}
+
+.styled-list p {
+  margin: 0.2em 0;
+  font-size: 0.95rem;
+}
+
+.styled-list a {
+  margin: 0.2em 0;
+  font-size: 0.875rem;
+}
+
+form {
+  width: 50%;
+  margin: 0 auto;
+}
+
+form label {
+  text-transform: uppercase;
+  color: var(--pink-accent);
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+form input,
+form textarea {
+  width: 100%;
+}
+
+form textarea {
+  height: 30vh;
+}
+
+form button {
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: var(--light-pink-accent);
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-transform: lowercase;
+}
+
+footer {
+  width: 100%;
+  padding: 2em 7.5em;
+  border-top: 1px solid var(--light-pink-accent);
+  display: flex;
+  justify-content: space-between;
+}
+
+footer .links a {
+  text-transform: lowercase;
+}
+
+footer .links a + a {
+  margin-left: 1em;
+}
+
+.playground {
+  position: relative;
+  width: 80vw; /* Full viewport width */
+  height: 75vh;
+  overflow: hidden; /* Prevent cards from being dragged outside the container */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding: 1em;
+  border: 2px solid var(--pink-accent);
+  border-radius: 10px;
+  background-color: #fdfdfd;
+}
+
+/* Balls container */
+.balls-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Ball styles */
+.ball {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--pink-accent);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+
+.ball:active {
+  cursor: grabbing;
+}
+
+.card {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  border: 2px solid var(--pink-accent);
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: grab;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:active {
+  cursor: grabbing;
+  transform: scale(1.05); /* Slight zoom effect when dragging */
+}
+
+/* Default styles for the card images */
+.card-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.card-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.qr-code {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Text styles */
+.card-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--pink-accent);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-shadow: none;
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Hover effect */
+.card:hover .card-main-image {
+  opacity: 0; /* Hide the main image */
+}
+
+.card:hover .qr-code {
+  opacity: 1; /* Show the QR code */
+}
+
+.card:hover .card-text {
+  background-color: transparent; /* Remove background for hover text */
+  color: var(--pink-accent); /* Change text color to pink */
+  content: "Scan to Interact"; /* Change the text */
+}
+
+/* Top-left text */
+.card-top-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--pink-accent); /* Pink color */
+  background: none; /* No background */
+}
+
+/* Top-right QR code container */
+.card-top-right {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  text-align: center;
+  z-index: 2;
+  width: 70px; /* Limit the width of the container */
+}
+
+/* Text below QR code */
+.qr-text {
+  font-size: 0.7rem; /* Smaller text size */
+  font-weight: bold;
+  color: var(--pink-accent); /* Pink color */
+  background: none; /* No background */
+  margin-top: 2px; /* Add slight spacing above the text */
+}
+
+@media (max-width: 950px) {
+  .section-container {
+    padding: 0;
+  }
+
+  .page-section {
+    margin: 1em 0em;
+  }
+
+  form {
+    width: 75%;
+  }
+
+  .section-text {
+    margin: 1em;
+  }
+}
+
+@media (max-width: 750px) {
+  .landing-page {
+    padding: 2em;
+  }
+
+  .landing-page .intro-container {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .landing-page .intro-container .intro-text {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .landing-page .intro-container .intro-text .intro-title,
+  .landing-page .intro-container .intro-text .intro-subtitle {
+    text-align: center;
+  }
+
+  .landing-page .intro-container .intro-image {
+    width: 100%;
+    padding: 0;
+  }
+
+  nav {
+    height: auto;
+  }
+
+  main section {
+    margin: 0em;
+    padding: 2em;
+  }
+
+  .section-link {
+    padding: 0 0 1em;
+  }
+
+  .site {
+    flex-direction: column;
+  }
+
+  .site .site-image {
+    margin-right: 0em;
+  }
+
+  .site .site-text {
+    width: 100%;
+    padding: 1em 0 0;
+  }
+
+  .styled-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .styled-list li {
+    margin: 1em;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  footer {
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+  }
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
