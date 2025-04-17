@@ -372,3 +372,133 @@ document.addEventListener("DOMContentLoaded", function () {
   detectCollisions();
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const loadingLanding = document.querySelector(".loading-landing");
+  if (!loadingLanding) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const images = loadingLanding.querySelectorAll("img");
+  const loader = loadingLanding.querySelector(".loader--text");
+
+  if (images.length === 0) {
+    setTimeout(() => {
+      loader.textContent = "100%";
+      showDemo();
+    }, 3000);
+    return;
+  }
+
+  const updateProgress = (instance) => {
+    const progress = Math.round((instance.progressedCount * 100) / images.length);
+    loader.textContent = `${progress}%`;
+  };
+
+  const showDemo = () => {
+    document.body.style.overflow = "auto";
+    document.scrollingElement.scrollTo(0, 0);
+    gsap.to(loadingLanding.querySelector(".loader"), { autoAlpha: 0 });
+
+    // Animate each row in the demo-gallery and demo-text
+    const sections = gsap.utils.toArray(".demo-gallery .wrapper, .demo-text .wrapper");
+    sections.forEach((section, index) => {
+      const [x, xEnd] = index % 2 === 0
+        ? [section.scrollWidth * -1, 0] // Move left to right
+        : ["100%", (section.scrollWidth - section.offsetWidth) * -1]; // Move right to left
+
+      gsap.fromTo(section, { x }, {
+        x: xEnd,
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom", // Start animation when the section enters the viewport
+          end: "bottom top", // End animation when the section leaves the viewport
+          scrub: 0.5, // Smooth scrolling effect
+        },
+      });
+    });
+  };
+
+  imagesLoaded(images)
+    .on("progress", (instance) => {
+      updateProgress(instance);
+    })
+    .on("always", () => {
+      loader.textContent = "100%";
+      showDemo();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const avatar = document.getElementById("avatar");
+  const navbarAvatar = document.getElementById("navbar-avatar");
+  const chatModal = document.getElementById("chat-modal");
+  const closeChat = document.getElementById("close-chat");
+  const chatBody = document.getElementById("chat-body");
+  const chatInput = document.getElementById("chat-input");
+  const sendMessage = document.getElementById("send-message");
+
+  // Function to toggle chat modal
+  function toggleChatModal() {
+    chatModal.style.display = chatModal.style.display === "flex" ? "none" : "flex";
+  }
+
+  // Open chat modal when either avatar is clicked
+  avatar.addEventListener("click", toggleChatModal);
+  navbarAvatar.addEventListener("click", toggleChatModal);
+
+
+  // Close chat modal
+  closeChat.addEventListener("click", () => {
+    chatModal.style.display = "none";
+  });
+
+  // Send message
+  sendMessage.addEventListener("click", () => {
+    const userMessage = chatInput.value.trim();
+    if (userMessage) {
+      // Add user's message to chat
+      const userChat = document.createElement("div");
+      userChat.className = "chat-message user";
+      userChat.textContent = userMessage;
+      chatBody.appendChild(userChat);
+
+      // Scroll to the bottom
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      // Clear input
+      chatInput.value = "";
+
+      // Add bot's response
+      setTimeout(() => {
+        const botChat = document.createElement("div");
+        botChat.className = "chat-message bot";
+        botChat.textContent = getBotResponse(userMessage);
+        chatBody.appendChild(botChat);
+
+        // Scroll to the bottom
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 1000);
+    }
+  });
+
+  // Bot response logic
+  function getBotResponse(message) {
+    const lowerMessage = message.toLowerCase();
+    if (lowerMessage.includes("hobby")) {
+      return "I love painting, cooking, and reading thriller novels!";
+    } else if (lowerMessage.includes("work")) {
+      return "I'm currently working on AR and web development projects!";
+    } else {
+      return "That's interesting! Tell me more. 😊";
+    }
+  }
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const letsChatButton = document.getElementById("lets-chat-button");
+  const chatModal = document.getElementById("chat-modal");
+
+  // Open chat modal when "Let's Chat" button is clicked
+  letsChatButton.addEventListener("click", () => {
+    chatModal.style.display = "flex";
+  });
+});

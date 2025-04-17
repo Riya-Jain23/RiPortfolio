@@ -41,18 +41,93 @@
     gtag('config', 'G-LVJDHD0SM9');
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
   <title>Riya Jain: Designer + Developer</title>
 </head>
 
 <body>
-    <audio id="bg-music" loop>
-      <source src="calm-space-music-312291.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
+
+  <div class="loading-landing">
+    <!-- Loading and landing animation HTML here -->
+    <div class="loader df aic jcc">
+      <div>
+        <h1>Loading</h1>
+        <h2 class="loader--text">0%</h2>
+      </div>
+    </div>
+
+    <div class="demo-wrapper">
+      <header class="df aic jcc">
+        <div>
+          <h1>RIYA JAIN</h1>
+          <h2>my portfolio</h2>
+        </div>
+        <div class="avatar-container">
+          <img id="avatar" src="static\images\av1 (1).png" alt="Assistant Avatar" />
+          <div class="chat-label">Let's Chat</div>
+        </div>
+        <div class="chat-modal" id="chat-modal">
+          <div class="chat-header">
+            <h3>Hi, I'm Riya!</h3>
+            <button id="close-chat">×</button>
+          </div>
+          <div class="chat-body" id="chat-body">
+            <div class="chat-message bot">Hello! Ask me anything about my work or hobbies. 😊</div>
+          </div>
+          <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Type your message..." />
+            <button id="send-message">Send</button>
+          </div>
+        </div>
+      </header>
+  
+      <section class="demo-text">
+        <div class="wrapper text">
+          DESIGNER
+        </div>
+      </section>
+  
+      <!-- Gallery Sections -->
+      <section class="demo-gallery">
+        <ul class="wrapper">
+          <li><img src="static\images\Frame 4.png" width="200" height="140" alt="Image 7"></li>
+          <li><img src="static\images\Frame 5.png" width="200" height="140" alt="Image 8"></li>
+          <li><img src="static\images\Frame 6.png" width="200" height="140" alt="Image 9"></li>
+          <li><img src="static\images\Frame 7.png" width="200" height="140" alt="Image 10"></li>
+          <li><img src="static\images\Frame 8.png" width="200" height="140" alt="Image 11"></li>
+          <li><img src="static\images\Frame 9.png" width="200" height="140" alt="Image 12"></li>
+          <li><img src="static\images\Frame 10.png" width="200" height="140" alt="Image 7"></li>
+          <li><img src="static\images\Frame 11.png" width="200" height="140" alt="Image 8"></li>
+          <li><img src="static\images\Frame 12.png" width="200" height="140" alt="Image 9"></li>
+        </ul>
+        <ul class="wrapper">
+          <li><img src="static\images\Frame 4.png" width="200" height="140" alt="Image 7"></li>
+          <li><img src="static\images\Frame 5.png" width="200" height="140" alt="Image 8"></li>
+          <li><img src="static\images\Frame 6.png" width="200" height="140" alt="Image 9"></li>
+          <li><img src="static\images\Frame 7.png" width="200" height="140" alt="Image 10"></li>
+          <li><img src="static\images\Frame 8.png" width="200" height="140" alt="Image 11"></li>
+          <li><img src="static\images\Frame 9.png" width="200" height="140" alt="Image 12"></li>
+          <li><img src="static\images\Frame 10.png" width="200" height="140" alt="Image 7"></li>
+          <li><img src="static\images\Frame 11.png" width="200" height="140" alt="Image 8"></li>
+          <li><img src="static\images\Frame 12.png" width="200" height="140" alt="Image 9"></li>
+        </ul>
+      </section>
+  
+      <section class="demo-text">
+        <div class="wrapper text">
+          DEVELOPER
+        </div>
+      </section>
+    </div>  
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="calm-space-music-312291.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
   </audio>
 
-  <button id="toggle-sound">🔊 Play Music</button>
-  <button id="toggle-theme" class="theme-toggle">🌙 Dark Mode</button>
-  <header class="landing-page">
+  <header id="about" class="landing-page">
     <div class="intro-container">
       <div class="intro-text">
         <p class="intro-greeting">Hey there, I'm</p>
@@ -74,10 +149,20 @@
       </div>
     </div>
   </header>
-  <nav>
-    <a href="#work">Projects</a>
-    <a href="#speaking">Playground</a>
-    <a href="#contact">Contact</a>
+  <nav id="navbar">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Projects</a>
+      <a href="#speaking">Playground</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-buttons">
+      <button id="toggle-sound">🔊 Play Music</button>
+      <button id="toggle-theme" class="theme-toggle">🌙 Dark Mode</button>
+      <div class="avatar-container">
+        <img id="navbar-avatar" src="static\images\av1 (1).png" alt="Assistant Avatar" />
+      </div>
+    </div>
   </nav>
   <main>
     <div class="section-break work">
