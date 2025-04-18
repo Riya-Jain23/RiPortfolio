@@ -346,6 +346,21 @@
           </div>
         </div>
         <div class="drag-label">Drag and Drop!</div>
+
+        <div id="send-heart">
+          ❤️ <span>Send a heart</span>
+        </div>
+
+        <!-- Modal for sending a heart -->
+        <div id="heart-modal" class="hidden">
+          <p>Share love for this portfolio?</p>
+          <input type="text" id="nickname" placeholder="Your nickname" />
+          <button id="heart-yes">Yes</button>
+          <button id="heart-no">No</button>
+        </div>
+
+        <!-- Container to display hearts -->
+        <div id="hearts-container"></div>
       </div>
     </section>
     <div class="section-break contact">
@@ -381,7 +396,10 @@
       <a href="https://medium.com/@jemimaabu">Medium</a>
     </div>
   </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-database-compat.js"></script>
+  <script src="./static/js/main.js"></script>
 </body>
-<script src="./static/js/main.js"></script>
+
 
 </html>

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&display=swap');
 
 :root {
+  --dark-bg-color: #1a1a2e;
   --light-pink-accent: #ff7ab4;
   --pink-accent: #e80065;
 }
@@ -80,7 +81,43 @@ body.dark-mode #navbar a {
 body.dark-mode #navbar a:hover {
   color: #f29fc3; /* Brighter pink on hover */
 }
+/* Dark mode styles for playground */
+body.dark-mode .playground {
+  background-color: #2a2a3d; /* Darker background */
+  border-color: var(--light-pink-accent);
+}
 
+body.dark-mode .card {
+  background-color: #1e1e2f; /* Dark card background */
+  border-color: var(--light-pink-accent);
+}
+
+body.dark-mode .card-text {
+  background-color: var(--light-pink-accent);
+  color: #ffffff;
+}
+
+body.dark-mode .card:hover .card-text {
+  background-color: transparent;
+  color: var(--light-pink-accent);
+}
+
+body.dark-mode .card-top-left {
+  color: var(--light-pink-accent);
+}
+/* Dark mode styles for contact section break */
+body.dark-mode .section-break.contact {
+  background-color: var(--dark-bg-color); /* Dark background */
+  background-image: 
+    radial-gradient(var(--light-pink-accent) 10%, transparent 0),
+    radial-gradient(var(--light-pink-accent) 10%, transparent 0);
+  background-size: 15px 15px;
+  background-position: 0 0, 22.5px 22.5px;
+  opacity: 0.8; /* Slightly reduce the pattern intensity */
+}
+body.dark-mode .intro-greeting {
+  color: var(--light-pink-accent); /* Light pink color */
+}
 .landing-page {
   position: relative;
   min-height: 90vh;
@@ -221,6 +258,103 @@ body.dark-mode #navbar a:hover {
   transform: translate(-50%, -50%) rotate(25deg); /* Center and rotate */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   animation: bounce 1.5s infinite;
+}
+
+/* Heart button */
+#send-heart {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ff4081;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#send-heart:hover {
+  transform: scale(1.1);
+  background-color: #d278a3;
+}
+
+/* Modal */
+#heart-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1000;
+}
+
+#heart-modal.hidden {
+  display: none;
+}
+
+#heart-modal input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#heart-modal button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#heart-yes {
+  background-color: #ff4081;
+  color: white;
+}
+
+#heart-no {
+  background-color: #ccc;
+  color: black;
+}
+
+/* Hearts container */
+#hearts-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating-heart {
+  background-color: #ff4081;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  animation: float 3s ease-in-out infinite;
+  z-index: 999; /* Ensure hearts appear above other playground elements */
+  pointer-events: none; /* Prevents hearts from interfering with draggable elements */
+}
+
+/* Floating animation for hearts */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
 }
 
 /* Cute bounce animation */

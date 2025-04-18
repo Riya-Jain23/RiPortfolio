@@ -502,3 +502,81 @@ document.addEventListener("DOMContentLoaded", function () {
     chatModal.style.display = "flex";
   });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Firebase initialization
+  const firebaseConfig = {
+    apiKey: "AIzaSyAH4WqpfB0f7mgTn8QKaxhWIy8-6BrVAnE",
+    authDomain: "riri-2021a.firebaseapp.com",
+    databaseURL: "https://riri-2021a-default-rtdb.firebaseio.com",
+    projectId: "riri-2021a",
+    storageBucket: "riri-2021a.appspot.com",
+    messagingSenderId: "859916296956",
+    appId: "1:859916296956:web:fb3fcef5c46019f5eb2d79",
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  // Get a reference to the Realtime Database
+  const db = firebase.database();
+
+  // Heart button functionality
+  const heartButton = document.getElementById("send-heart");
+  const heartModal = document.getElementById("heart-modal");
+  const heartYesButton = document.getElementById("heart-yes");
+  const heartNoButton = document.getElementById("heart-no");
+  const heartsContainer = document.getElementById("hearts-container");
+
+  if (heartButton && heartModal && heartYesButton && heartNoButton && heartsContainer) {
+    // Open modal
+    heartButton.onclick = () => {
+      heartModal.classList.remove("hidden");
+    };
+
+    // Close modal
+    heartNoButton.onclick = () => {
+      heartModal.classList.add("hidden");
+    };
+
+    // Save heart
+    heartYesButton.onclick = () => {
+      const nickname = document.getElementById("nickname").value || "Anonymous";
+      const heart = {
+        name: nickname,
+        timestamp: Date.now(),
+      };
+
+      // Save to Firebase
+      db.ref("hearts").push(heart, (error) => {
+        if (error) {
+          console.error("Error saving heart:", error);
+        } else {
+          heartModal.classList.add("hidden");
+        }
+      });
+    };
+
+    // Display hearts
+    db.ref("hearts").on("child_added", (snapshot) => {
+      const heart = snapshot.val();
+      const div = document.createElement("div");
+      div.textContent = `❤️ from ${heart.name}`;
+      div.classList.add("floating-heart");
+      
+      // Position the heart randomly within the playground
+      const playground = document.querySelector(".playground");
+      const playgroundRect = playground.getBoundingClientRect();
+      
+      // Random position within playground bounds
+      const randomX = Math.random() * (playgroundRect.width - 150); // 150px is approximate heart width
+      const randomY = Math.random() * (playgroundRect.height - 50);  // 50px is approximate heart height
+      
+      div.style.position = "absolute";
+      div.style.left = `${randomX}px`;
+      div.style.top = `${randomY}px`;
+      
+      // Append to playground instead of heartsContainer
+      playground.appendChild(div);
+    });
+  }
+});
