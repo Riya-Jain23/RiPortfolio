@@ -452,47 +452,91 @@ document.addEventListener("DOMContentLoaded", function () {
     chatModal.style.display = "none";
   });
 
-  // Send message
+  // Enhanced bot response logic
+  function getBotResponse(message) {
+    const lower = message.toLowerCase();
+    if (lower.includes("bye")) {
+      setTimeout(() => {
+        chatModal.style.display = "none";
+      }, 1000);
+      return "Goodbye! Have a great day! 👋";
+    }
+
+    const triggers = [
+      {
+        keywords: ["hi", "hello", "hey", "greetings", "howdy", "hiya", "hola", "hallo"], // Make keywords lowercase
+        response: "Hello! Nice to meet you! 😊"
+      },
+      {
+        keywords: ["Song", "music", "favorite song", "favorite music"],
+        response: "I love listening to a mix of pop and indie music! 🎶"
+      },
+      {
+        keywords: ["hobby", "do for fun", "free time", "interests", "like", "enjoy", "pass time", "hobbies"],
+        response: "I love painting, cooking, and reading thriller novels! 🎨📚🍳"
+      },
+      {
+        keywords: ["work", "job", "projects", "what do you do", "working"],
+        response: "I'm currently working on AR, web dev, and a cool food ordering system! 🍔🌐"
+      },
+      {
+        keywords: ["skills", "technologies", "tools", "languages", "what do you know"],
+        response: "I'm skilled in JavaScript, WebXR, UI/UX design, and a little bit of AI too! 💻✨"
+      },
+      {
+        keywords: ["portfolio", "projects", "show me"],
+        response: "You can scroll down to see my portfolio! Feel free to ask about any project. 🚀"
+      },
+      {
+        keywords: ["contact", "reach", "email", "linkedin"],
+        response: "You can reach me via the contact form or connect on LinkedIn! 😊"
+      }
+    ];
+
+    for (const trigger of triggers) {
+      if (trigger.keywords.some(keyword => lower.includes(keyword))) {
+        return trigger.response;
+      }
+    }
+
+    return "That's interesting! Tell me more. 😊";
+  }
+
+  // Update the send message logic
   sendMessage.addEventListener("click", () => {
     const userMessage = chatInput.value.trim();
     if (userMessage) {
-      // Add user's message to chat
+      // Add user's message
       const userChat = document.createElement("div");
       userChat.className = "chat-message user";
       userChat.textContent = userMessage;
       chatBody.appendChild(userChat);
-
-      // Scroll to the bottom
       chatBody.scrollTop = chatBody.scrollHeight;
-
-      // Clear input
       chatInput.value = "";
 
-      // Add bot's response
-      setTimeout(() => {
-        const botChat = document.createElement("div");
-        botChat.className = "chat-message bot";
-        botChat.textContent = getBotResponse(userMessage);
-        chatBody.appendChild(botChat);
+      // Add bot's typing indicator and response
+      const botChat = document.createElement("div");
+      botChat.className = "chat-message bot";
+      botChat.textContent = "Riya is typing...";
+      chatBody.appendChild(botChat);
+      chatBody.scrollTop = chatBody.scrollHeight;
 
-        // Scroll to the bottom
+      setTimeout(() => {
+        botChat.textContent = getBotResponse(userMessage);
         chatBody.scrollTop = chatBody.scrollHeight;
       }, 1000);
     }
   });
 
-  // Bot response logic
-  function getBotResponse(message) {
-    const lowerMessage = message.toLowerCase();
-    if (lowerMessage.includes("hobby")) {
-      return "I love painting, cooking, and reading thriller novels!";
-    } else if (lowerMessage.includes("work")) {
-      return "I'm currently working on AR and web development projects!";
-    } else {
-      return "That's interesting! Tell me more. 😊";
-    }
-  }
+  // Add suggestion buttons functionality
+  document.querySelectorAll(".chat-suggestion").forEach(button => {
+    button.addEventListener("click", () => {
+      chatInput.value = button.textContent;
+      sendMessage.click();
+    });
+  });
 });
+
 document.addEventListener("DOMContentLoaded", function () {
   const letsChatButton = document.getElementById("lets-chat-button");
   const chatModal = document.getElementById("chat-modal");
@@ -556,27 +600,167 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     };
 
-    // Display hearts
+    // Update the heart display code in your Firebase child_added listener
     db.ref("hearts").on("child_added", (snapshot) => {
       const heart = snapshot.val();
       const div = document.createElement("div");
       div.textContent = `❤️ from ${heart.name}`;
       div.classList.add("floating-heart");
+      div.draggable = true; // Make heart draggable
       
       // Position the heart randomly within the playground
       const playground = document.querySelector(".playground");
       const playgroundRect = playground.getBoundingClientRect();
       
       // Random position within playground bounds
-      const randomX = Math.random() * (playgroundRect.width - 150); // 150px is approximate heart width
-      const randomY = Math.random() * (playgroundRect.height - 50);  // 50px is approximate heart height
+      const randomX = Math.random() * (playgroundRect.width - 150);
+      const randomY = Math.random() * (playgroundRect.height - 50);
       
       div.style.position = "absolute";
       div.style.left = `${randomX}px`;
       div.style.top = `${randomY}px`;
       
-      // Append to playground instead of heartsContainer
+      // Add drag functionality
+      let offsetX = 0;
+      let offsetY = 0;
+      let velocityX = 0;
+      let velocityY = 0;
+      let lastX = 0;
+      let lastY = 0;
+      let zIndexCounter = 1000;
+
+      div.addEventListener("dragstart", (e) => {
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+        div.style.opacity = "0.7";
+        zIndexCounter++;
+        div.style.zIndex = zIndexCounter;
+      });
+
+      div.addEventListener("drag", (e) => {
+        if (e.clientX === 0 && e.clientY === 0) return;
+
+        const rect = playground.getBoundingClientRect();
+        let newX = e.clientX - rect.left - offsetX;
+        let newY = e.clientY - rect.top - offsetY;
+
+        // Constrain movement within the playground
+        newX = Math.max(0, Math.min(newX, rect.width - 150));
+        newY = Math.max(0, Math.min(newY, rect.height - 50));
+
+        // Calculate velocity
+        velocityX = newX - lastX;
+        velocityY = newY - lastY;
+        lastX = newX;
+        lastY = newY;
+
+        div.style.left = `${newX}px`;
+        div.style.top = `${newY}px`;
+      });
+
+      div.addEventListener("dragend", () => {
+        div.style.opacity = "1";
+        
+        // Add bounce effect
+        const rect = playground.getBoundingClientRect();
+        const heartRect = div.getBoundingClientRect();
+
+        if (heartRect.left <= rect.left || heartRect.right >= rect.right) {
+          velocityX = -velocityX * 0.5;
+        }
+        if (heartRect.top <= rect.top || heartRect.bottom >= rect.bottom) {
+          velocityY = -velocityY * 0.5;
+        }
+
+        // Apply velocity-based movement
+        let animationFrame;
+        const applyVelocity = () => {
+          let newX = parseFloat(div.style.left) + velocityX;
+          let newY = parseFloat(div.style.top) + velocityY;
+
+          // Constrain movement
+          newX = Math.max(0, Math.min(newX, rect.width - 150));
+          newY = Math.max(0, Math.min(newY, rect.height - 50));
+
+          div.style.left = `${newX}px`;
+          div.style.top = `${newY}px`;
+
+          // Apply friction
+          velocityX *= 0.9;
+          velocityY *= 0.9;
+
+          if (Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1) {
+            animationFrame = requestAnimationFrame(applyVelocity);
+          } else {
+            cancelAnimationFrame(animationFrame);
+          }
+        };
+
+        applyVelocity();
+      });
+      
       playground.appendChild(div);
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const playground = document.querySelector(".playground");
+  const cards = playground.querySelectorAll(".card");
+
+  function randomizeCardPositions() {
+    cards.forEach(card => {
+      // Get playground dimensions
+      const playgroundRect = playground.getBoundingClientRect();
+      
+      // Calculate maximum positions while keeping cards within bounds
+      const maxX = playgroundRect.width - card.offsetWidth;
+      const maxY = playgroundRect.height - card.offsetHeight;
+
+      // Generate random positions
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      // Apply random positions
+      card.style.left = `${randomX}px`;
+      card.style.top = `${randomY}px`;
+
+      // Add random rotation between -15 and 15 degrees
+      const randomRotation = (Math.random() - 0.5) * 30;
+      card.style.transform = `rotate(${randomRotation}deg)`;
+    });
+  }
+
+  // Initial randomization
+  randomizeCardPositions();
+
+  // Optional: Randomize positions when window is resized
+  window.addEventListener("resize", randomizeCardPositions);
+});
+
+// Initialize Email.js
+(function() {
+  emailjs.init("kT01aDbQFCChvcc3O");
+})();
+
+function sendEmail(e) {
+  e.preventDefault();
+
+  const params = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value,
+  };
+
+  emailjs.send('service_ulo7mbo', 'template_sffvhti', params)
+    .then(function(response) {
+      alert("Message sent successfully! 📧");
+      document.getElementById("contact-form").reset();
+      document.getElementById("message-count").textContent = "1000";
+    }, function(error) {
+      console.error("Error:", error);
+      alert("Failed to send message. Please try again.");
+    });
+
+  return false;
+}

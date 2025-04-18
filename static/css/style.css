@@ -118,6 +118,59 @@ body.dark-mode .section-break.contact {
 body.dark-mode .intro-greeting {
   color: var(--light-pink-accent); /* Light pink color */
 }
+/* Dark mode styles for chat modal */
+body.dark-mode .chat-modal {
+  background: #1e1e2f;
+  border: 1px solid var(--light-pink-accent);
+}
+
+body.dark-mode .chat-header {
+  background: var(--light-pink-accent);
+  color: #ffffff;
+}
+
+body.dark-mode .chat-body {
+  background: #1e1e2f;
+  color: #ffffff;
+}
+
+body.dark-mode .chat-footer {
+  border-top: 1px solid #3a3a4d;
+}
+
+body.dark-mode .chat-footer input {
+  background: #2a2a3d;
+  border: 1px solid #3a3a4d;
+  color: #ffffff;
+}
+
+body.dark-mode .chat-footer button {
+  background: var(--light-pink-accent);
+  color: #ffffff;
+}
+
+body.dark-mode .chat-message.bot {
+  background: #2a2a3d;
+  color: #ffffff;
+}
+
+body.dark-mode .chat-message.user {
+  background: var(--light-pink-accent);
+  color: #ffffff;
+}
+
+body.dark-mode .chat-suggestions {
+  background: #2a2a3d;
+  border-top: 1px solid #3a3a4d;
+}
+
+body.dark-mode .chat-suggestion {
+  background: var(--light-pink-accent);
+}
+
+body.dark-mode .chat-suggestion:hover {
+  background: #d278a3;
+}
 .landing-page {
   position: relative;
   min-height: 90vh;
@@ -336,7 +389,7 @@ body.dark-mode .intro-greeting {
 }
 
 .floating-heart {
-  background-color: #ff4081;
+  background-color: var(--light-pink-accent);
   color: white;
   padding: 5px 10px;
   border-radius: 20px;
@@ -344,16 +397,20 @@ body.dark-mode .intro-greeting {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   animation: float 3s ease-in-out infinite;
   z-index: 999; /* Ensure hearts appear above other playground elements */
-  pointer-events: none; /* Prevents hearts from interfering with draggable elements */
+  cursor: grab;
+  user-select: none;
+}
+.floating-heart:active {
+  cursor: grabbing;
 }
 
 /* Floating animation for hearts */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0) rotate(-5deg);
+    transform: translateY(0) rotate(-3deg);
   }
   50% {
-    transform: translateY(-20px) rotate(5deg);
+    transform: translateY(-20px) rotate(3deg);
   }
 }
 
@@ -757,7 +814,7 @@ footer .links a + a {
 .playground {
   position: relative;
   width: 80vw; /* Full viewport width */
-  height: 75vh;
+  min-height: 75vh;
   overflow: hidden; /* Prevent cards from being dragged outside the container */
   display: flex;
   flex-wrap: wrap;
@@ -791,7 +848,7 @@ footer .links a + a {
 }
 
 .card {
-  position: relative;
+  position: absolute;
   width: 200px;
   height: 250px;
   border: 2px solid var(--pink-accent);
@@ -1106,6 +1163,37 @@ footer .links a + a {
   background: var(--pink-accent);
   color: white;
   align-self: flex-end;
+}
+/* Add these styles for chat suggestions */
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-top: 1px solid #eee;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.chat-suggestion {
+  background: var(--light-pink-accent, #ff4081);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.chat-suggestion:hover {
+  background: #e35b8d;
+}
+
+/* Dark mode support */
+body.dark-mode .chat-suggestions {
+  background-color: #2a2a3d;
+  border-color: #3a3a4d;
 }
 .scroll-row {
   overflow-x: auto;

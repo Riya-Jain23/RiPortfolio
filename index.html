@@ -75,6 +75,12 @@
           <div class="chat-body" id="chat-body">
             <div class="chat-message bot">Hello! Ask me anything about my work or hobbies. 😊</div>
           </div>
+          <div class="chat-suggestions" id="chat-suggestions">
+            <button class="chat-suggestion">What are your hobbies?</button>
+            <button class="chat-suggestion">What are you working on?</button>
+            <button class="chat-suggestion">What skills do you have?</button>
+            <button class="chat-suggestion">How can I contact you?</button>
+          </div>
           <div class="chat-footer">
             <input type="text" id="chat-input" placeholder="Type your message..." />
             <button id="send-message">Send</button>
@@ -319,7 +325,7 @@
     <div class="section-break speaking">
     </div>
     <section id="speaking">
-      <h2 class="section-title">Random Explorations</h2>
+      <h2 class="section-title">Playground </h2>
       <div class="section-container playground">
         <div class="card" draggable="true">
           <div class="card-image">
@@ -368,7 +374,7 @@
     <section id="contact">
       <h2 class="section-title">Send Me A Message</h2>
       <div class="section-container">
-        <form name="contact" method="POST" data-netlify="true" action="#contact">
+        <form id="contact-form" name="contact" onsubmit="return sendEmail(event)">
           <p>
             <label for="name">Your Name:<br> <input type="text" id="name" name="name" required /></label>
           </p>
@@ -398,6 +404,7 @@
   </footer>
   <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-database-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="./static/js/main.js"></script>
 </body>
 
