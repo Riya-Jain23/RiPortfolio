@@ -105,17 +105,50 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   themeToggle.addEventListener("click", function () {
+    toggleTheme();
     if (body.classList.contains("dark-mode")) {
-      body.classList.remove("dark-mode");
-      localStorage.setItem("theme", "light-mode");
-      themeToggle.textContent = "🌙 Dark Mode";
-    } else {
-      body.classList.add("dark-mode");
       localStorage.setItem("theme", "dark-mode");
       themeToggle.textContent = "☀️ Light Mode";
+    } else {
+      localStorage.setItem("theme", "light-mode");
+      themeToggle.textContent = "🌙 Dark Mode";
     }
   });
 });
+
+// Add this to your theme toggle function
+function toggleTheme() {
+  const body = document.body;
+  const themeToggle = document.querySelector('.theme-toggle');
+  
+  // Create toast message element
+  const toast = document.createElement('div');
+  toast.className = 'theme-toast';
+  
+  if (body.classList.contains('dark-mode')) {
+    // Switching to light mode
+    body.classList.remove('dark-mode');
+    themeToggle.classList.remove('dark');
+    toast.textContent = "Let there be light! ☀️";
+  } else {
+    // Switching to dark mode
+    body.classList.add('dark-mode');
+    themeToggle.classList.add('dark');
+    toast.textContent = "Welcome to the dark side... 🌙";
+  }
+  
+  // Add toast to body
+  document.body.appendChild(toast);
+  
+  // Trigger animation
+  setTimeout(() => toast.classList.add('show'), 100);
+  
+  // Remove toast after animation
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 500);
+  }, 2000);
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".card");

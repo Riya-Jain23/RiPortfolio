@@ -515,7 +515,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: sticky;
+  position: static;
   top: 0;
   background-color: #fff;
   z-index: 99;
@@ -528,7 +528,7 @@ nav a {
 
 /* Navbar styles */
 #navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   background-color: white;
@@ -546,15 +546,19 @@ nav a {
 }
 
 .nav-links a {
-  text-transform: lowercase;
+  position: relative;
   text-decoration: none;
   color: black;
   font-size: 16px;
-  transition: color 0.3s ease;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: var(--pink-accent); /* Highlight color on hover */
+  background-color: var(--pink-accent);
+  color: white;
+  border-radius: 5px; /* Optional: Rounded corners */
+  transform: scale(1.1); /* Slightly enlarge the link on hover */
 }
 
 .nav-buttons {
@@ -677,13 +681,18 @@ main section {
 }
 
 .site-image img {
-  width: 100%;
-  filter: grayscale(1);
-  transition: filter 0.3s;
+  width: 100%; /* Ensure all images take up the full width of their container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image fills the container without distortion */
+  max-width: 300px; /* Set the maximum width to match the Kalahaat image */
+  display: block;
+  margin: 0 auto; /* Center the images */
+  filter: grayscale(1); /* Keep the grayscale effect */
+  transition: filter 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .site-image img:hover {
-  filter: grayscale(0);
+  filter: grayscale(0); /* Remove grayscale on hover */
 }
 
 .site .site-text {
@@ -1216,6 +1225,36 @@ footer .links a + a {
   justify-content: space-between;
   align-items: center;
   border-radius: 10px 10px 0 0;
+}
+
+.chat-header .close-chat {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: var(--pink-accent); /* Vibrant pink background */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%; /* Circular button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.chat-header .close-chat:hover {
+  background-color: #d278a3; /* Slightly darker pink on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.chat-header .close-chat:active {
+  transform: scale(0.9); /* Shrink slightly on click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce shadow on click */
 }
 
 .chat-body {
@@ -1764,4 +1803,32 @@ html, body {
   color: var(--pink-accent);
   opacity: 0.8;
   font-style: italic;
+}
+
+/* Theme Toast */
+.theme-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--pink-accent);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 16px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Dark mode support */
+body.dark-mode .theme-toast {
+  background: var(--light-pink-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
