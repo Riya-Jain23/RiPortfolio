@@ -904,7 +904,7 @@ footer {
   padding: 2em 7.5em;
   border-top: 1px solid var(--light-pink-accent);
   display: flex;
-  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 footer .links a {
@@ -1417,3 +1417,351 @@ body.dark-mode .chat-suggestions {
   }
 }
 
+/* Add these media queries at the end of your CSS file */
+
+@media (max-width: 768px) {
+  /* Navigation */
+  #navbar {
+    padding: 10px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  /* Landing section */
+  .landing-page {
+    padding: 1em;
+  }
+
+  .landing-page .intro-container {
+    padding: 0.5em;
+  }
+
+  /* Playground section */
+  .playground {
+    width: 95vw;
+    min-height: 50vh;
+    padding: 0.5em;
+  }
+
+  .card {
+    width: 150px;
+    height: 200px;
+  }
+
+  /* Contact section */
+  form {
+    width: 90%;
+  }
+
+  /* General spacing */
+  main section {
+    margin: 0em 1em;
+    padding: 1em 0;
+  }
+
+  .section-container {
+    padding: 0 1em;
+  }
+
+  .section-break {
+    height: 30vh;
+  }
+
+  /* Fix container widths */
+  .section-container {
+    padding: 0 1em;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* Fix playground width */
+  .playground {
+    width: 90vw;
+    margin: 0 auto;
+    padding: 1em;
+  }
+
+  /* Fix image container overflow */
+  .image-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    right: 0;
+    bottom: 0;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Fix main section padding */
+  main section {
+    margin: 0;
+    padding: 1em;
+  }
+
+  /* Fix site layout */
+  .site {
+    flex-direction: column;
+    padding: 1em;
+  }
+
+  .site-image {
+    width: 100%;
+    margin: 0;
+  }
+
+  .site .site-text {
+    width: 100%;
+    padding: 1em 0;
+  }
+
+  /* Fix form width */
+  form {
+    width: 100%;
+    padding: 0 1em;
+  }
+
+  /* Fix intro container */
+  .landing-page {
+    padding: 1em;
+  }
+
+  .landing-page .intro-container {
+    padding: 1em;
+    width: 100%;
+  }
+
+  .landing-page .intro-container .intro-text {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Fix navbar */
+  #navbar {
+    padding: 10px;
+    width: 100%;
+  }
+}
+
+/* Additional fixes for smaller screens */
+@media (max-width: 480px) {
+  /* Text sizing */
+  .landing-page .intro-title {
+    font-size: 2.5rem;
+  }
+
+  /* Navigation */
+  .nav-links {
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  /* Chat modal */
+  .chat-modal {
+    width: 90%;
+    right: 5%;
+    bottom: 5rem;
+    left: 5%;
+  }
+
+  /* Heart interactions */
+  #send-heart {
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+  }
+
+  /* Project cards */
+  .site {
+    padding: 1em 0;
+  }
+
+  .site-stack li {
+    margin: 0 0.25em 0.5em 0;
+  }
+
+  /* Footer */
+  footer {
+    padding: 1em;
+  }
+
+  /* Remove any fixed widths */
+  .section-container,
+  .playground,
+  .site-text,
+  form {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Adjust padding and margins */
+  .landing-page,
+  .section-container,
+  main section {
+    padding: 1em;
+    margin: 0;
+  }
+}
+
+/* Fix for specific iOS issues */
+@supports (-webkit-touch-callout: none) {
+  .section-break {
+    background-attachment: scroll;
+  }
+  
+  .playground {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Landscape orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .landing-page .intro-container {
+    min-height: auto;
+    padding: 1em;
+  }
+
+  .section-break {
+    height: 60vh;
+  }
+
+  .chat-modal {
+    height: 80vh;
+  }
+}
+
+/* Add these fixes at the end of your CSS file */
+
+/* Fix horizontal scroll and overflow issues */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  /* Fix navbar width and position */
+  #navbar {
+    width: 100vw;
+    left: 0;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+  }
+
+  /* Adjust main content to account for fixed navbar */
+  main {
+    margin-top: 60px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Fix send-heart button positioning */
+  #send-heart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 998;
+  }
+
+  /* Hearts container positioning */
+  #hearts-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 997;
+  }
+
+  /* Fix playground width */
+  .playground {
+    width: calc(100% - 2em);
+    margin: 1em;
+  }
+
+  /* Fix section containers */
+  .section-container {
+    width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Adjust padding for smaller screens */
+  .section-container,
+  main section {
+    padding: 0.5em;
+  }
+
+  /* Fix navbar buttons on small screens */
+  .nav-buttons {
+    gap: 5px;
+  }
+
+  /* Adjust chat modal position */
+  .chat-modal {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    bottom: 70px;
+  }
+}
+
+/* Konami Code Effects */
+@keyframes rainbow {
+  0% { background: #ff71c9; }
+  20% { background: #ff9871; }
+  40% { background: #ffeb71; }
+  60% { background: #71ff7b; }
+  80% { background: #71d0ff; }
+  100% { background: #ff71c9; }
+}
+
+.konami-trail {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fadeTrail 1s ease-out forwards;
+}
+
+@keyframes fadeTrail {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+.konami-emoji {
+  position: fixed;
+  font-size: 2rem;
+  pointer-events: none;
+  z-index: 9998;
+  animation: float-up 4s ease-out infinite;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.konami-hint {
+  font-size: 0.8rem;
+  color: var(--pink-accent);
+  opacity: 0.8;
+  font-style: italic;
+}

@@ -798,3 +798,104 @@ document.addEventListener("keydown", (e) => {
     closePdfModal();
   }
 });
+
+// Add Konami Code Easter Egg
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+let konamiActive = false;
+
+document.addEventListener('keydown', (e) => {
+  // Check if the pressed key matches the next key in sequence
+  // Convert 'b' and 'a' to lowercase for case-insensitive comparison
+  const currentKey = (konamiCode[konamiIndex] === 'b' || konamiCode[konamiIndex] === 'a') 
+    ? e.key.toLowerCase() 
+    : e.key;
+
+  if (currentKey === konamiCode[konamiIndex]) {
+    konamiIndex++;
+    
+    // If the full sequence is entered
+    if (konamiIndex === konamiCode.length) {
+      // Reset the index
+      konamiIndex = 0;
+      
+      // Trigger fun effects
+      activateKonamiCode();
+    }
+  } else {
+    konamiIndex = 0;
+  }
+
+  // Update event listener for Escape key
+  if (e.key === 'Escape' && konamiActive) {
+    deactivateKonamiCode();
+  }
+});
+
+function activateKonamiCode() {
+  // Add fun effects when code is triggered
+  konamiActive = true;
+  document.body.style.transition = 'all 1s';
+  
+  // Create floating elements
+  for (let i = 0; i < 20; i++) {
+    createFloatingEmoji();
+  }
+  
+  // Play a fun sound
+  const audio = new Audio('./static/more assets/success-221935.mp3');
+  audio.play().catch(err => console.log('Audio play failed:', err));
+  
+  // Add rainbow background
+  document.body.style.animation = 'rainbow 3s linear infinite';
+
+  // Start emoji cursor trail
+  document.addEventListener('mousemove', createEmojiTrail);
+}
+
+function deactivateKonamiCode() {
+  konamiActive = false;
+  document.body.style.animation = 'none';
+  document.removeEventListener('mousemove', createEmojiTrail);
+  // Remove any remaining emoji trails
+  document.querySelectorAll('.konami-trail').forEach(el => el.remove());
+}
+
+function createEmojiTrail(e) {
+  if (!konamiActive) return;
+  
+  const emoji = document.createElement('div');
+  emoji.className = 'konami-trail';
+  emoji.textContent = ['✨', '🌟', '💫', '⭐', '🎮'][Math.floor(Math.random() * 5)];
+  emoji.style.left = e.clientX + 'px';
+  emoji.style.top = e.clientY + 'px';
+  
+  document.body.appendChild(emoji);
+  
+  // Remove trail after animation
+  setTimeout(() => emoji.remove(), 1000);
+}
+
+function createFloatingEmoji() {
+  const emoji = document.createElement('div');
+  emoji.className = 'konami-emoji';
+  emoji.textContent = ['🎮', '🌟', '✨', '🎯', '🎪'][Math.floor(Math.random() * 5)];
+  
+  // Position from bottom of screen
+  emoji.style.position = 'fixed';
+  emoji.style.bottom = '-50px';
+  emoji.style.left = Math.random() * window.innerWidth + 'px';
+  emoji.style.zIndex = '9999';
+  
+  document.body.appendChild(emoji);
+  
+  // Animate upward
+  requestAnimationFrame(() => {
+    emoji.style.transition = 'all 2s ease-out';
+    emoji.style.transform = `translateY(-${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+    emoji.style.opacity = '0';
+  });
+  
+  // Remove after animation
+  setTimeout(() => emoji.remove(), 2000);
+}
