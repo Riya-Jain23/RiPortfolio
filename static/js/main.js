@@ -510,11 +510,11 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       {
         keywords: ["work", "job", "projects", "what do you do", "working"],
-        response: "I'm currently working on AR, web dev, and a cool food ordering system! 🍔🌐"
+        response: "I'm currently working on AR, web dev, and interactive systems! 🍔🌐"
       },
       {
         keywords: ["skills", "technologies", "tools", "languages", "what do you know"],
-        response: "I'm skilled in JavaScript, WebXR, UI/UX design, and a little bit of AI too! 💻✨"
+        response: "I'm skilled in Java, DSA, UI/UX design, and a little bit of AI too! 💻✨"
       },
       {
         keywords: ["portfolio", "projects", "show me"],
@@ -931,4 +931,22 @@ function createFloatingEmoji() {
   
   // Remove after animation
   setTimeout(() => emoji.remove(), 2000);
+}
+// Add magnetic effect to interactive elements
+function addMagneticEffect() {
+  const magneticElements = document.querySelectorAll('button, .nav-links a, .site-stack li');
+  
+  magneticElements.forEach(elem => {
+    elem.addEventListener('mousemove', (e) => {
+      const { left, top, width, height } = elem.getBoundingClientRect();
+      const x = e.clientX - left - width/2;
+      const y = e.clientY - top - height/2;
+      
+      elem.style.transform = `translate(${x*0.3}px, ${y*0.3}px)`;
+    });
+    
+    elem.addEventListener('mouseleave', () => {
+      elem.style.transform = 'translate(0px, 0px)';
+    });
+  });
 }
