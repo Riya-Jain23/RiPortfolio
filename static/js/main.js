@@ -2,7 +2,7 @@ window.onload = function () {
   setInterval(loadIntro, 2000);
 };
 
-var intros = ["Developer", "Designer", "Student", "Trying Artist", "Trying Chef", "Huge Nerd"];
+var intros = ["Developer", "Designer", "Student", "Problem Solver", "Trying Artist", "Trying Chef", "Huge Nerd"];
 var index = 0;
 var intro = document.getElementById("intro-loader");
 
@@ -764,3 +764,37 @@ function sendEmail(e) {
 
   return false;
 }
+// Add these functions to your main.js
+function openPdfModal(pdfUrl) {
+  const modal = document.getElementById("pdf-modal");
+  const iframe = document.getElementById("pdf-frame");
+  iframe.src = pdfUrl;
+  modal.style.display = "flex";
+  
+  // Prevent body scrolling when modal is open
+  document.body.style.overflow = "hidden";
+}
+
+function closePdfModal() {
+  const modal = document.getElementById("pdf-modal");
+  const iframe = document.getElementById("pdf-frame");
+  iframe.src = "";
+  modal.style.display = "none";
+  
+  // Restore body scrolling
+  document.body.style.overflow = "auto";
+}
+
+// Close modal when clicking outside
+document.getElementById("pdf-modal").addEventListener("click", (e) => {
+  if (e.target.id === "pdf-modal") {
+    closePdfModal();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closePdfModal();
+  }
+});
